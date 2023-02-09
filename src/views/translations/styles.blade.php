@@ -13,6 +13,7 @@
     #trans-in-db-table td {
         text-align: center;
         vertical-align:middle;
+        max-width: 200px;
     }
 
     .trans-in-db-inline{

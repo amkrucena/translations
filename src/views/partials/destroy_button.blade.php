@@ -12,5 +12,5 @@
         data-success-text="{{ $success_text }}"
         class="btn {{ isset($class) ? $class : 'btn-xs' }} btn-danger translations-in-database-confirm-action"
 >
-    <i class="fa fa-trash-o"></i> {{ array_get($uiTranslations, 'delete') }}
+    <i class="fa fa-trash-o"></i> {{ Arr::get($uiTranslations, 'delete') }}
 </a>

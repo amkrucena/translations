@@ -12,11 +12,11 @@
                 <div class="panel-heading">
                     <div class="panel-heading-btn">
                         <a href="{{ route('admin.languages.create')  }}"
-                           class="btn btn-xs btn-success"><i class="fa fa-plus"></i> {{ array_get($uiTranslations, 'create') }}</a>
+                           class="btn btn-xs btn-success"><i class="fa fa-plus"></i> {{ Arr::get($uiTranslations, 'create') }}</a>
                     </div>
 
                     <h4 class="panel-title">
-                        {{ array_get($uiTranslations, 'languages') }}
+                        {{ Arr::get($uiTranslations, 'languages') }}
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -26,12 +26,12 @@
                            id="languages-index-datatable">
                         <thead>
                         <tr>
-                            <th>{{ array_get($uiTranslations, 'title') }}</th>
-                            <th>{{ array_get($uiTranslations, 'title_localized') }}</th>
-                            <th>{{ array_get($uiTranslations, 'iso_code') }}</th>
-                            <th>{{ array_get($uiTranslations, 'fallback') }}?</th>
-                            <th>{{ array_get($uiTranslations, 'visible') }}?</th>
-                            <th>{{ array_get($uiTranslations, 'actions') }}</th>
+                            <th>{{ Arr::get($uiTranslations, 'title') }}</th>
+                            <th>{{ Arr::get($uiTranslations, 'title_localized') }}</th>
+                            <th>{{ Arr::get($uiTranslations, 'iso_code') }}</th>
+                            <th>{{ Arr::get($uiTranslations, 'fallback') }}?</th>
+                            <th>{{ Arr::get($uiTranslations, 'visible') }}?</th>
+                            <th>{{ Arr::get($uiTranslations, 'actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -41,10 +41,10 @@
                                 <td>{{ $language->title_localized }}</td>
                                 <td>{{ $language->iso_code }}</td>
                                 <td>
-                                    {{ $language->is_fallback ? array_get($uiTranslations, 'yes') : array_get($uiTranslations, 'no') }}
+                                    {{ $language->is_fallback ? Arr::get($uiTranslations, 'yes') : Arr::get($uiTranslations, 'no') }}
                                 </td>
                                 <td>
-                                    {{ $language->is_visible ? array_get($uiTranslations, 'yes') : array_get($uiTranslations, 'no') }}
+                                    {{ $language->is_visible ? Arr::get($uiTranslations, 'yes') : Arr::get($uiTranslations, 'no') }}
                                 </td>
                                 <td width="10%" class="text-center">
                                     @include( $viewNamespace . '::partials.edit_button', [
@@ -56,11 +56,11 @@
                                         'route'         => 'admin.languages.destroy',
                                         'data_id'       => $language->iso_code,
                                         'row'           => $language,
-                                        'title'         => array_get($uiTranslations, 'are_you_sure'),
-                                        'text'          => array_get($uiTranslations, 'language_will_be_deleted'),
-                                        'confirm'       => array_get($uiTranslations, 'accept'),
-                                        'success_title' => array_get($uiTranslations, 'deleted'),
-                                        'success_text'  => array_get($uiTranslations, 'language_deleted'),
+                                        'title'         => Arr::get($uiTranslations, 'are_you_sure'),
+                                        'text'          => Arr::get($uiTranslations, 'language_will_be_deleted'),
+                                        'confirm'       => Arr::get($uiTranslations, 'accept'),
+                                        'success_title' => Arr::get($uiTranslations, 'deleted'),
+                                        'success_text'  => Arr::get($uiTranslations, 'language_deleted'),
                                     ])
                                 </td>
                             </tr>

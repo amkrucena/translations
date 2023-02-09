@@ -2,10 +2,14 @@
 
 namespace Netcore\Translator\PassThroughs\Translation;
 
+use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Netcore\Translator\PassThroughs\PassThrough;
 use Netcore\Translator\Models\Translation;
 use Netcore\Translator\Models\Language;
+use Throwable;
 
 class Import extends PassThrough
 {
@@ -35,10 +39,10 @@ class Import extends PassThrough
      * @param $allData
      * @param bool $flashMessage
      * @return bool
-     * @throws \Exception
-     * @throws \Throwable
+     * @throws Exception
+     * @throws Throwable
      */
-    public function process($allData, $flashMessage = true)
+    public function process($allData, bool $flashMessage = true): bool
     {
         DB::transaction(function () use ($allData, $flashMessage) {
 
@@ -79,9 +83,9 @@ class Import extends PassThrough
     /**
      * @param $json
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
-    public function processJson($json)
+    public function processJson($json): bool
     {
 
         $this->flushCache();
@@ -91,9 +95,9 @@ class Import extends PassThrough
 
     /**
      * @param $allData
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
-    private function parsedTranslations($allData)
+    private function parsedTranslations($allData): array
     {
         $locales = Language::pluck('iso_code')->toArray();
 
@@ -103,7 +107,7 @@ class Import extends PassThrough
 
             // If this is not empty, it means we only have one sheet.
             // Otherwise, we have multiple sheets.
-            $groupKey = array_get($pageData, 'key', '');
+            $groupKey = Arr::get($pageData, 'key', '');
 
             if ($groupKey) {
                 foreach ($allData as $row) {
@@ -129,13 +133,13 @@ class Import extends PassThrough
     /**
      * @param $row
      * @param $locales
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
-    private function translationsFromOneRow($row, $locales)
+    private function translationsFromOneRow($row, $locales): Collection
     {
         $translations = collect();
 
-        $groupKey = array_get($row, 'key', '');
+        $groupKey = Arr::get($row, 'key', '');
 
         if (!$groupKey) {
             return $translations;
@@ -156,7 +160,7 @@ class Import extends PassThrough
                     'locale' => $fieldname,
                     'group'  => $group,
                     'key'    => $key,
-                    'value'  => array_get($row, $fieldname, ''),
+                    'value'  => Arr::get($row, $fieldname, ''),
                 ]);
 
                 if (function_exists('domain_id')) {
@@ -174,7 +178,7 @@ class Import extends PassThrough
      * @param $parsedTranslations
      * @return array
      */
-    private function newTranslations($parsedTranslations)
+    private function newTranslations($parsedTranslations): array
     {
         $overrideOldTranslations = config('translations.override_old_translations', false);
 
@@ -224,7 +228,7 @@ class Import extends PassThrough
      * @param $newKeysCount
      * @param $existingKeysCount
      */
-    private function flashMessages($newKeysCount, $existingKeysCount)
+    private function flashMessages($newKeysCount, $existingKeysCount): void
     {
         $response = [];
         $uiTranslations = config('translations.ui_translations.translations', []);
@@ -232,13 +236,13 @@ class Import extends PassThrough
 
         if ($newKeysCount) {
             if ($overrideOldTranslations) {
-                $xNewKeysWereFound = array_get(
+                $xNewKeysWereFound = Arr::get(
                     $uiTranslations,
                     'x_keys_were_modified',
                     ':count keys modified in the system!'
                 );
             } else {
-                $xNewKeysWereFound = array_get(
+                $xNewKeysWereFound = Arr::get(
                     $uiTranslations,
                     'x_new_keys_were_found',
                     ':count new keys added to the system!'
@@ -247,7 +251,7 @@ class Import extends PassThrough
 
             $response[] = str_replace(':count', $newKeysCount, $xNewKeysWereFound);
         } else {
-            $noNewKeysWereFound = array_get(
+            $noNewKeysWereFound = Arr::get(
                 $uiTranslations,
                 'new_keys_were_not_found',
                 'No new keys to add! Doing nothing.'
@@ -256,7 +260,7 @@ class Import extends PassThrough
         }
 
         if ($existingKeysCount) {
-            $xKeysAlreadyExist = array_get(
+            $xKeysAlreadyExist = Arr::get(
                 $uiTranslations,
                 'x_keys_already_exist',
                 ':count keys already exist. These were not changed.'
@@ -267,10 +271,7 @@ class Import extends PassThrough
         session()->flash('success', $response);
     }
 
-    /**
-     *
-     */
-    public function flushCache()
+    public function flushCache(): void
     {
         $keyToForget = 'translations';
         $function = config('translations.translations_key_in_cache');

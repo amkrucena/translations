@@ -32,7 +32,7 @@ class ServiceProvider extends TranslationServiceProvider
             // locale as well as the fallback locale.
             $locale = TransHelper::getLanguage();
 
-            $trans = new \Netcore\Translator\Translator($loader, $locale);
+            $trans = new Translator($loader, $locale->iso_code);
 
             $trans->setFallback($app['config']['app.fallback_locale']);
 

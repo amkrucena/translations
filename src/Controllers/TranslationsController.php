@@ -4,6 +4,7 @@ namespace Netcore\Translator\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 use Netcore\Translator\Models\Translation;
 use Netcore\Translator\Requests\ImportTranslationsRequest;
 use Netcore\Translator\Models\Language;
@@ -47,19 +48,19 @@ class TranslationsController extends Controller
         $toLocale = session()->get('to_locale', null);
 
         if (!$fromLocale || !$toLocale) {
-            $fromLocale = input('from_locale', array_get($locales, 0, ''));
-            $toLocale = input('to_locale', array_get($locales, 1, ''));
+            $fromLocale = input('from_locale', Arr::get($locales, 0, ''));
+            $toLocale = input('to_locale', Arr::get($locales, 1, ''));
         }
 
         if (!in_array($fromLocale, $locales)) {
-            $fromLocale = array_get($locales, 0, '');
+            $fromLocale = Arr::get($locales, 0, '');
         }
 
         if (!in_array($toLocale, $locales)) {
-            $toLocale = array_get(
+            $toLocale = Arr::get(
                 $locales,
                 1,
-                array_get($locales, 0)
+                Arr::get($locales, 0)
             );
         }
 
@@ -87,7 +88,7 @@ class TranslationsController extends Controller
 
         $uiTranslations = config('translations.ui_translations.translations', []);
 
-        $groups = ['' => array_get($uiTranslations, 'all_groups')] + $groups->pluck('group', 'group')->toArray();
+        $groups = ['' => Arr::get($uiTranslations, 'all_groups')] + $groups->pluck('group', 'group')->toArray();
 
         $extends = config('translations.extends', 'layouts.admin');
         $section = config('translations.section', 'layouts.content');
@@ -161,7 +162,7 @@ class TranslationsController extends Controller
         } catch (\Exception $e) {
 
             $uiTranslations = config('translations.ui_translations.translations', []);
-            $error = array_get($uiTranslations, 'couldnt_import_excel');
+            $error = Arr::get($uiTranslations, 'couldnt_import_excel');
 
             return redirect()->back()->withError($error);
         }
@@ -211,7 +212,7 @@ class TranslationsController extends Controller
         }
         
         $uiTranslations = config('translations.ui_translations.translations', []);
-        $msg = array_get(
+        $msg = Arr::get(
             $uiTranslations,
             'translation_has_been_added',
             'Translation has been added!'

@@ -15,7 +15,7 @@
             <div class="panel panel-inverse">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        {{  array_get($uiTranslations, 'translations') }}
+                        {{  Arr::get($uiTranslations, 'translations') }}
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -33,7 +33,7 @@
                                     </select>
                                 </div>
                                 <a href="{{ route('admin.translations.export') }}" download class="btn btn-success btn-xs">
-                                    {{ array_get($uiTranslations, 'export_excel') }}
+                                    {{ Arr::get($uiTranslations, 'export_excel') }}
                                 </a>
                             </form>
 
@@ -64,7 +64,7 @@
                             <div class="row">
                                 <div class="col-md-6">
 
-                                    <form action="" class="col-xs-12 trans-in-db-inline trans-in-db-zero-padding"">
+                                    <form action="" class="col-xs-12 trans-in-db-inline trans-in-db-zero-padding">
                                         <div class="input-group trans-in-db-zero-margin">
 
                                             <span class="input-group-addon" id="trans-in-db-search-span">
@@ -73,7 +73,7 @@
 
                                             <input
                                                 type="text"
-                                                placeholder="{{ array_get($uiTranslations, 'search') }}"
+                                                placeholder="{{ Arr::get($uiTranslations, 'search') }}"
                                                 class="form-control no-padding-hr resource-search"
                                                 id="trans-in-db-search-input"
                                             >
@@ -90,18 +90,22 @@
 
                                         <input
                                                 type="submit"
-                                                value="{{ array_get($uiTranslations, 'import_excel') }}"
+                                                value="{{ Arr::get($uiTranslations, 'import_excel') }}"
                                                 class="btn btn-xs btn-info trans-in-db-inline-block"
                                         >
                                     </form>
 
                                     <a href="{{ route('admin.translations.manual') }}" id="manual-options">
-                                        {{ array_get($uiTranslations, 'add_manually', 'Add manually') }}
+                                        {{ Arr::get($uiTranslations, 'add_manually', 'Add manually') }}
                                     </a>
                                 </div>
                             </div>
 
                             <br/>
+
+                        </div>
+
+                        <div class="col-md-12">
                             @include($viewNamespace.'::translations.table')
                         </div>
                     </div>

@@ -16,8 +16,8 @@
 				]
 			});
 
-			$('#languages-index-datatable_wrapper .table-caption').text('{{ array_get($uiTranslations, 'languages') }}');
-			$('#languages-index-datatable_wrapper .dataTables_filter input').attr('placeholder', '{{ array_get($uiTranslations, 'search') }}');
+			$('#languages-index-datatable_wrapper .table-caption').text('{{ Arr::get($uiTranslations, 'languages') }}');
+			$('#languages-index-datatable_wrapper .dataTables_filter input').attr('placeholder', '{{ Arr::get($uiTranslations, 'search') }}');
 		}
 
 		$('body').on('click', '.translations-in-database-confirm-action', function (e) {

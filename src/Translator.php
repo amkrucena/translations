@@ -1,5 +1,6 @@
 <?php namespace Netcore\Translator;
 
+use Illuminate\Support\Arr;
 use Netcore\Translator\Helpers\TransHelper;
 use Netcore\Translator\Models\Translation;
 
@@ -29,12 +30,12 @@ class Translator extends \Illuminate\Translation\Translator
      * Get the translation for the given key.
      *
      * @param string $id
-     * @param array $parameters
+     * @param array|string $parameters
      * @param null $locale
      * @param bool $fallback
      * @return String
      */
-    public function get($id, array $parameters = [], $locale = null, $fallback = true): String
+    public function get($id, $parameters = [], $locale = null, $fallback = true): String
     {
         /*
          * Overwrite way how trans('group.key') helper and @lang directive work
@@ -55,7 +56,7 @@ class Translator extends \Illuminate\Translation\Translator
             $staticCacheKey .= '-' . md5(json_encode($parameters));
         }
 
-        $cached = array_get(self::$staticCacheFrequentTranslations, $staticCacheKey);
+        $cached = Arr::get(self::$staticCacheFrequentTranslations, $staticCacheKey);
         if ($cached) {
             return $cached;
         }
@@ -91,10 +92,10 @@ class Translator extends \Illuminate\Translation\Translator
 
         $fallbackLanguage = TransHelper::getFallbackLanguage();
 
-        $translation = array_get(self::$staticCacheAllTranslations, "{$currentLanguage->iso_code}.{$id}", $id);
+        $translation = Arr::get(self::$staticCacheAllTranslations, "{$currentLanguage->iso_code}.{$id}", $id);
 
         if (!$translation) {
-            $translation = array_get(self::$staticCacheAllTranslations, "{$fallbackLanguage->iso_code}.{$id}", $id);
+            $translation = Arr::get(self::$staticCacheAllTranslations, "{$fallbackLanguage->iso_code}.{$id}", $id);
         }
 
         if ($id != 'validation.attributes') {

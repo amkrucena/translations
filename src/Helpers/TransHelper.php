@@ -96,12 +96,12 @@ class TransHelper
 
         $languages = collect();
         if (Schema::hasTable('languages')) {
-            $languages = \Netcore\Translator\Models\Language::all();
+            $languages = Language::all();
         }
 
         if(!$languages->count()) {
             $languages = collect([
-                new \Netcore\Translator\Models\Language([
+                new Language([
                     'iso_code'        => config('app.locale'),
                     'title'           => strtoupper(config('app.locale')),
                     'title_localized' => strtoupper(config('app.locale'))

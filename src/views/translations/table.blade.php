@@ -5,7 +5,7 @@
 
     <tr id="headertr">
 
-        <th width="15%">{{ array_get($uiTranslations, 'group_key') }}</th>
+        <th width="15%">{{ Arr::get($uiTranslations, 'group_key') }}</th>
 
         <th width="40%">
             <form action="" class="col-xs-12 locale_switching_form trans-in-db-inline trans-in-db-zero-padding">
@@ -113,7 +113,7 @@
                        data-type="textarea"
                        data-pk="{{ $t ? $t->id : 0 }}"
                        data-url="{{ $editUrl }}"
-                       data-title="{{ array_get($uiTranslations, 'provide_translation') }}">{{ $t ? $t->value : '' }}</a>
+                       data-title="{{ Arr::get($uiTranslations, 'provide_translation') }}">{{ $t ? $t->value : '' }}</a>
                 </td>
             @endforeach
 

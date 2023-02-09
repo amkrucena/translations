@@ -8,7 +8,7 @@
             <div class="panel panel-inverse">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        {{  array_get($uiTranslations, 'translations') }}
+                        {{  Arr::get($uiTranslations, 'translations') }}
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -22,7 +22,7 @@
                         <div class="col-md-10">
 
                             <p>
-                                {{ array_get($uiTranslations, 'here_you_can_add_new_keys', 'Here you can manually add new keys:') }}
+                                {{ Arr::get($uiTranslations, 'here_you_can_add_new_keys', 'Here you can manually add new keys:') }}
                             </p>
 
                             <form action="{{ route('admin.translations.store' ) }}" method="POST">
@@ -50,7 +50,7 @@
 
                                 <input
                                     type="submit"
-                                    value="{{ array_get($uiTranslations, 'add_new_key', 'Add') }}"
+                                    value="{{ Arr::get($uiTranslations, 'add_new_key', 'Add') }}"
                                     class="btn btn-primary"
                                     style="display:inline-block;"
                                 >

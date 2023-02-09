@@ -7,11 +7,11 @@
             <div class="panel panel-inverse">
                 <div class="panel-heading">
                     <div class="panel-heading-btn">
-                        <a href="{{ route('admin.languages.index') }}" class="btn btn-xs btn-success"><i class="fa fa-undo"></i> {{ array_get($uiTranslations, 'back_to_list') }}</a>
+                        <a href="{{ route('admin.languages.index') }}" class="btn btn-xs btn-success"><i class="fa fa-undo"></i> {{ Arr::get($uiTranslations, 'back_to_list') }}</a>
                     </div>
 
                     <h4 class="panel-title">
-                        {{ array_get($uiTranslations, 'create_language') }}
+                        {{ Arr::get($uiTranslations, 'create_language') }}
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -24,7 +24,7 @@
 
                     <div class="form-group">
                         <div class="col-md-8 col-md-offset-4">
-                            <button type="submit" class="btn btn-primary m-r-5 pull-right"><i class="fa fa-save"></i> {{ array_get($uiTranslations, 'save') }}</button>
+                            <button type="submit" class="btn btn-primary m-r-5 pull-right"><i class="fa fa-save"></i> {{ Arr::get($uiTranslations, 'save') }}</button>
                         </div>
                     </div>
 
